@@ -26,6 +26,7 @@ namespace Sukhina_IKM721A_2course_project
             A.tAbout.Start();
             A.ShowDialog();
             MajorObject = new MajorWork();
+            MajorObject.SetTime();
             this.Mode = true;
         }
 
@@ -80,6 +81,13 @@ namespace Sukhina_IKM721A_2course_project
             tClock.Stop();
             MessageBox.Show("The time has passed!");// Showing the Message
             tClock.Start();
+        }
+
+        private void Form1_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            string s;
+            s = (System.DateTime.Now - MajorObject.GetTime()).ToString();
+            MessageBox.Show(s, "Час роботи програми"); 
         }
     }
 }

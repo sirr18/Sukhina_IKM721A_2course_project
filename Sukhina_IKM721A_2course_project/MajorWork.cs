@@ -8,8 +8,19 @@ namespace Sukhina_IKM721A_2course_project
 {
     internal class MajorWork
     {
+        private System.DateTime TimeBegin;
         private string Data; // Input data
         private string Result;
+
+        public void SetTime() // метод запису часу початку роботи програми
+        {
+            this.TimeBegin = System.DateTime.Now;
+        }
+
+        public System.DateTime GetTime() // Метод отримання часу завершення програми
+        {
+            return this.TimeBegin;
+        }
 
         public void Write(string D) // Method for writing data to an object
         {
