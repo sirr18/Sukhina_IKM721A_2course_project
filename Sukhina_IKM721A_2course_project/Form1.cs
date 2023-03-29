@@ -28,6 +28,7 @@ namespace Sukhina_IKM721A_2course_project
             A.ShowDialog();
             MajorObject = new MajorWork();
             MajorObject.SetTime();
+            MajorObject.Modify = false;
             this.Mode = true;
         }
 
@@ -108,7 +109,8 @@ namespace Sukhina_IKM721A_2course_project
         {
             if (sfdSave.ShowDialog() == DialogResult.OK)// Виклик діалогового вікна збереження
             {
-                MessageBox.Show(sfdSave.FileName);
+                MajorObject.WriteSaveFileName(sfdSave.FileName); 
+                MajorObject.SaveToFile(); 
             }
         }
 
