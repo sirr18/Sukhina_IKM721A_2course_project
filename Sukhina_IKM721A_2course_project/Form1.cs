@@ -119,7 +119,8 @@ namespace Sukhina_IKM721A_2course_project
         {
             if (ofdOpen.ShowDialog() == DialogResult.OK) // Виклик діалогового вікна відкриття
             {
-                MessageBox.Show(ofdOpen.FileName);
+                MajorObject.WriteOpenFileName(ofdOpen.FileName); // відкриття файлу 
+                MajorObject.ReadFromFile(dgwOpen); // читання даних з файлу
             }
         }
 
@@ -166,7 +167,12 @@ namespace Sukhina_IKM721A_2course_project
                 if (MessageBox.Show("Дані не були збережені. Продовжити вихід?", "УВАГА",
                 MessageBoxButtons.YesNo) == DialogResult.No)
                     e.Cancel = true; // припинити закриття
-        } 
+        }
+
+        private void bSearch_Click(object sender, EventArgs e)
+        {
+            MajorObject.Find(tbSearch.Text);
+        }
     }
 }
 
