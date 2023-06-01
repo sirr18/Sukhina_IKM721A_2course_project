@@ -75,7 +75,8 @@ namespace Sukhina_IKM721A_2course_project
                 D.Result = Convert.ToString(this.Result);
                 D.Key = Key;
                 Key++;
-                BinaryFormatter BF = new BinaryFormatter(); 
+                BinaryFormatter BF = new BinaryFormatter();
+                BF.Serialize(S, D);
                 S.Flush(); 
                 S.Close(); 
                 this.Modify = false; 
