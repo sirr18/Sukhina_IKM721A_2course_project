@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows.Forms;
+using System.Collections;
 
 namespace Sukhina_IKM721A_2course_project
 {
@@ -16,6 +17,12 @@ namespace Sukhina_IKM721A_2course_project
         private string Result;
         public bool Modify;
         private int Key;
+
+        public Stack myStack = new Stack();
+        public string[] myArr = new string[100];
+
+        public Queue myQueue = new Queue();
+        public string[] smyQueue = new string[100];
 
         public void SetTime() // метод запису часу початку роботи програми
         {
