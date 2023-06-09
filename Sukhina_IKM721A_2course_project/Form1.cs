@@ -82,6 +82,8 @@ namespace Sukhina_IKM721A_2course_project
                 bStart.Text = "Стоп"; // зміна тексту на кнопці на "Стоп"
                 пускToolStripMenuItem.Text = "Стоп";
                 this.Mode = false;
+                label1.Text = "Введить у поле текст";
+                label7.Text = "Введить кодове слово";
             }
             else
             {
@@ -92,9 +94,16 @@ namespace Sukhina_IKM721A_2course_project
                 bStart.Text = "Пуск";
                 пускToolStripMenuItem.Text = "Пуск";
                 this.Mode = true;
+                if (string.IsNullOrWhiteSpace(tbInput.Text) || string.IsNullOrWhiteSpace(tbInput2.Text))
+                {
+                    MessageBox.Show("Введіть текст у поле і кодове слово", "Помилка");
+                    return;
+                }
                 MajorObject.Write(tbInput.Text);
+                MajorObject.Write2(tbInput2.Text);
                 MajorObject.Task();
                 label1.Text = MajorObject.Read();
+                label7.Text = "Кодове слово";
             }
         }
 
@@ -104,18 +113,12 @@ namespace Sukhina_IKM721A_2course_project
             tClock.Stop();
             tClock.Start();
 
-            if ((e.KeyChar >= '0' && e.KeyChar <= '9') | (e.KeyChar == (char)8)) // You can enter only digits
+            if (!char.IsLetter(e.KeyChar) && e.KeyChar != ' ' && e.KeyChar != ',' && e.KeyChar != '.' && e.KeyChar != (char)Keys.Back)
             {
-                return;
-            }
-            else
-            {
-                //When you enter a wrong symbol, the error message appears, the timer reloads, and the wrong symbol disappears
+                e.Handled = true;
                 tClock.Stop();
                 MessageBox.Show("Неправильний символ", "Помилка");
                 tClock.Start();
-                e.KeyChar = (char)0;
-
             }
         }
 

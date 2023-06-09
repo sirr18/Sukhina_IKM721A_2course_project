@@ -7,13 +7,15 @@ using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows.Forms;
 using System.Collections;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Sukhina_IKM721A_2course_project
 {
     internal class MajorWork
     {
         private System.DateTime TimeBegin;
-        private string Data; // Input data
+        private string Data;
+        private string Keyword; // Input data
         private string Result;
         public bool Modify;
         private int Key;
@@ -100,22 +102,30 @@ namespace Sukhina_IKM721A_2course_project
         {
             this.Data = D;
         }
+
+        public void Write2(string D) // Method for writing data to an object
+        {
+            this.Keyword = D;
+        }
         public string Read()
         {
             return this.Result;
         }
 
-        public void Task() // Software realization method
+        public int Task() // Software realization method
         {
-            if (this.Data.Length > 5)
+            int count = 0;
+            int index = 0;
+
+            while ((index = Data.IndexOf(Keyword, index, System.StringComparison.OrdinalIgnoreCase)) != -1)
             {
-                this.Result = Convert.ToString(true);
+                count++;
+                index += Keyword.Length;
             }
-            else
-            {
-                this.Result = Convert.ToString(false);
-            }
+    
+            Result = $"Количество вхождений слова '{Keyword}' в тексте: {count}";
             this.Modify = true;
+            return count;
         }
         public void SaveToFile() // Запис даних до файлу
         {
@@ -130,6 +140,7 @@ namespace Sukhina_IKM721A_2course_project
                     S = File.Open(this.SaveFileName, FileMode.Create);
                 Buffer D = new Buffer(); 
                 D.Data = this.Data;
+                D.Keyword = this.Keyword;
                 D.Result = Convert.ToString(this.Result);
                 D.Key = Key;
                 Key++;
@@ -161,10 +172,12 @@ namespace Sukhina_IKM721A_2course_project
                 System.Data.DataTable MT = new System.Data.DataTable();
                 System.Data.DataColumn cKey = new System.Data.DataColumn("Ключ");// формуємо колонку "Ключ"
                 System.Data.DataColumn cInput = new System.Data.DataColumn("Вхідні дані");// формуємо колонку "Вхідні дані"
+                System.Data.DataColumn cInput2 = new System.Data.DataColumn("Кодове слово");// формуємо колонку "Вхідні дані"
                 System.Data.DataColumn cResult = new System.Data.DataColumn("Результат");// формуємо колонку "Результат"
 
                 MT.Columns.Add(cKey);// додавання ключа
                 MT.Columns.Add(cInput);// додавання вхідних даних
+                MT.Columns.Add(cInput2);// додавання вхідних даних
                 MT.Columns.Add(cResult);// додавання результату
 
                 while (S.Position < S.Length)
@@ -176,6 +189,7 @@ namespace Sukhina_IKM721A_2course_project
                     MR = MT.NewRow();
                     MR["Ключ"] = D.Key; // Занесення в таблицю номера
                     MR["Вхідні дані"] = D.Data; // Занесення в таблицю вхідних даних
+                    MR["Кодове слово"] = D.Keyword; // Занесення в таблицю вхідних даних
                     MR["Результат"] = D.Result; // Занесення в таблицю результату
                     MT.Rows.Add(MR);
 
@@ -265,7 +279,8 @@ namespace Sukhina_IKM721A_2course_project
 
                     {
                         string ST;
-                        ST = "Запис містить:" + (char)13 + "No" + Num + "Вхідні дані:" + D.Data + "Результат:" + D.Result;
+                        ST = $"Запис № {Num} містить:" + (char)13 + (char)13 + "Вхідні дані: " + D.Data + (char)13 + (char)13 +
+                            "Кодове слово: " + D.Keyword + (char)13 + (char)13 + "Результат: " + D.Result;
                         MessageBox.Show(ST, "Запис знайдена"); // Виведення на екран повідомлення "запис містить", номер, вхідних даних і результат
                         S.Close();
                         return;

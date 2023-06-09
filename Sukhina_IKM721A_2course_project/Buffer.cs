@@ -10,6 +10,7 @@ namespace Sukhina_IKM721A_2course_project
     internal class Buffer
     {
         public string Data;
+        public string Keyword;
         public string Result;
         public int Key;
 
